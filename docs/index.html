@@ -1,48 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>app设计文档</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
-  <style>
-  	.app-name-link{
-  		font-size:20px;
-  		font-weight: 600;
-  	}
-  	.sidebar-nav .section-link{
-  		font-size:14px;
-  	}
-  </style>
 
-</head>
-<body>
-	<div id="app"></div>
-  <script>
-    window.$docsify = {
-    	name: '消防e站通app设计文档',
-    	nameLink: '/docs',
-    	mergeNavbar: true,
-    	maxLevel: 4,
-    	auto2top: true,//切换页面后是否自动跳转到页面顶部
-	    // 完整配置参数
-	    search: {
-	      maxAge: 86400000, // 过期时间，单位毫秒，默认一天
-	      paths: [], // or 'auto'
-				placeholder: '搜索',
-	      noData:'找不到结果',
-	
-	      // 搜索标题的最大程级, 1 - 6
-	      depth: 2
-	    }
-  }
-</script>
-<!--<script src="//unpkg.com/docsify"></script>-->
-<script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
-  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-bash.js"></script>
-<script src="//unpkg.com/prismjs/components/prism-php.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>app设计文档</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="description" content="Description">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+		<style>
+		
+			.sidebar {
+				padding-top: 0;
+			}
+			
+			.search {
+				margin-bottom: 20px;
+				padding: 6px;
+				border-bottom: 1px solid #eee;
+			}
+			
+			.search .input-wrap {
+				display: flex;
+				align-items: center;
+			}
+			
+			.search .results-panel {
+				display: none;
+			}
+			
+			.search .results-panel.show {
+				display: block;
+			}
+			
+			.search input {
+				outline: none;
+				border: none;
+				width: 100%;
+				padding: 0 7px;
+				line-height: 36px;
+				font-size: 14px;
+			}
+			
+			.search input::-webkit-search-decoration,
+			.search input::-webkit-search-cancel-button,
+			.search input {
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+			}
+			
+			.search .clear-button {
+				width: 36px;
+				text-align: right;
+				display: none;
+			}
+			
+			.search .clear-button.show {
+				display: block;
+			}
+			
+			.search .clear-button svg {
+				transform: scale(.5);
+			}
+			
+			.search h2 {
+				font-size: 17px;
+				margin: 10px 0;
+			}
+			
+			.search a {
+				text-decoration: none;
+				color: inherit;
+			}
+			
+			.search .matching-post {
+				border-bottom: 1px solid #eee;
+			}
+			
+			.search .matching-post:last-child {
+				border-bottom: 0;
+			}
+			
+			.search p {
+				font-size: 14px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			
+			.search p.empty {
+				text-align: center;
+			}
+			
+			
+			.sidebar-nav .ul-after {
+				content: '';
+				width: 10px;
+				height: 30px;
+				/* background: red; */
+				position: absolute;
+				right: 10px;
+				top: 0px;
+				display: flex;
+				align-items: center;
+			}
+			.sidebar-nav-parent-li{
+				position: relative;
+			}
+			.sidebar-nav-parent-li .ul-after,.sidebar-nav-parent-li-shouqi .ul-after{
+				transition: transform 0.3s;
+			}
+			.sidebar-nav-parent-li .ul-after-sanjiao {
+				width: 0;
+				height: 0;
+				border-left: 8px solid #cecece;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				transition: transform 0.3s;
+				position: relative;
+			}
+			
+			.sidebar-nav-parent-li .ul-after-sanjiao::after {
+				content: '';
+				width: 0;
+				height: 0;
+				position: absolute;
+				top: -8px;
+				left: -11px;
+				border-left: 8px solid #fff;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+			}
+			.sidebar-nav-parent-li-shouqi .ul-after{
+				-webkit-transform-origin: center;
+				transform-origin: center;
+				-webkit-transform:rotate(90deg);
+				transform:rotate(90deg)
+			}
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div id="app"></div>
+		<!-- vue文件在线编辑 -->
+		<script src="//unpkg.com/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+		<script src="//unpkg.com/docsify-demo-box-vue/dist/docsify-demo-box-vue.min.js"></script>
+
+		<script>
+			var jsResources = '<scr' + 'ipt src="//unpkg.com/vue/dist/vue.js"></scr' + 'ipt>'
+			var cssResources = '@import url("//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css");'
+			var bootCode = 'var globalVariable = "leon"'
+			var globalVariable = "leon"
+			window.$docsify = {
+				name: '消防e站通app设计文档',
+				nameLink: '/docs',
+				maxLevel: 3,
+				auto2top: true, //切换页面后是否自动跳转到页面顶部
+				// 完整配置参数
+				search: {
+					 placeholder: '请输入关键字',
+			        noData: '暂无结果',
+			        // 搜索标题的最大程级, 1 - 6
+			        depth: 6
+				},
+				plugins: [
+					DemoBoxVue.create(jsResources, cssResources, bootCode),
+					function(hook) {
+						hook.doneEach(function() {
+
+							let max_cengji = 3;
+							//添加箭头
+							$('.sidebar-nav').find('li').each(function(i, e) {
+								var el = e;
+								if(el.nextSibling && el.nextSibling.tagName == 'UL') {
+									$(el).addClass('sidebar-nav-parent-li').append(
+										"<div class='ul-after'><div class='ul-after-sanjiao'></div></div>");
+								}
+							})
+
+							//初始化话展开层级
+
+							function find_children_li(dom, current_cengji) {
+								if(dom) {
+									current_cengji++;
+									$($(dom).find('li').each(function(i, e) {
+										var el = e;
+										if(el.nextSibling && el.nextSibling.tagName == 'UL') {
+											if(current_cengji >= max_cengji) {
+												$(el.nextSibling).hide();
+												$(el).addClass('sidebar-nav-parent-li-shouqi');
+											}
+											find_children_li(el.nextSibling, current_cengji);
+										}
+									}))
+								} else {
+									return
+								}
+							}
+
+							find_children_li($('.sidebar-nav')[0], 0);
+
+							//绑定事件
+							$('.ul-after-sanjiao').on('click', function(e) {
+								e.stopPropagation();
+								e.preventDefault();
+								var el = e.target.parentNode.parentNode.nextSibling;
+								if(el) {
+									$(el).toggle();
+									if($(e.target.parentNode.parentNode).hasClass('sidebar-nav-parent-li-shouqi')) {
+										$(e.target.parentNode.parentNode).removeClass('sidebar-nav-parent-li-shouqi');
+									} else {
+										 $(e.target.parentNode.parentNode).addClass('sidebar-nav-parent-li-shouqi');
+									}
+								}
+							})
+
+							//回到顶部
+							let return_top = $('<div class="return-top"><div class="return-top-div">顶</div></div>')
+							$('html').append(return_top);
+							$(window).scroll(function() {
+								var scroll = $(window).scrollTop();
+								if(scroll > 1000) {
+									$(return_top).show();
+								} else {
+									$(return_top).hide();
+								}
+							})
+							return_top.on('click', function(e) {
+								$('html,body').animate({
+									scrollTop: 0
+								}, 500)
+							})
+						})
+					}
+				]
+			}
+		</script>
+		<!--<script src="//unpkg.com/docsify"></script>-->
+		<script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+		<script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+		<script src="//unpkg.com/prismjs/components/prism-bash.js"></script>
+		<script src="//unpkg.com/prismjs/components/prism-php.js"></script>
+		<script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
+	</body>
+
 </html>
